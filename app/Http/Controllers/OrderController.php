@@ -16,30 +16,30 @@ class OrderController extends Controller
 	public function process()
 	{
         return view('frontend.order.checkout');
-    }
+  }
 
-    private function getSelectedShipping($destination, $totalWeight, $shippingService)
-	{
-		$shippingOptions = $this->getShippingCost($destination, $totalWeight);
+  //   private function getSelectedShipping($destination, $totalWeight, $shippingService)
+	// {
+	// 	$shippingOptions = $this->getShippingCost($destination, $totalWeight);
 
-		$selectedShipping = null;
-		if ($shippingOptions['results']) {
-			foreach ($shippingOptions['results'] as $shippingOption) {
-				if (str_replace(' ', '', $shippingOption['service']) == $shippingService) {
-					$selectedShipping = $shippingOption;
-					break;
-				}
-			}
-		}
+	// 	$selectedShipping = null;
+	// 	if ($shippingOptions['results']) {
+	// 		foreach ($shippingOptions['results'] as $shippingOption) {
+	// 			if (str_replace(' ', '', $shippingOption['service']) == $shippingService) {
+	// 				$selectedShipping = $shippingOption;
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
 
-		return $selectedShipping;
-	}
+	// 	return $selectedShipping;
+	// }
 
     public function checkout(Request $request){
         $params = $request->except('_token');
 
 		$order = \DB::transaction(function() use ($params) {
-			$destination = $params['city'];
+			// $destination = $params['city'];
 			$items = \Cart::getContent();
 
 			$totalWeight = 0;
@@ -47,13 +47,14 @@ class OrderController extends Controller
 				$totalWeight += ($item->quantity * $item->associatedModel->weight);
 			}
 
-			$selectedShipping = $this->getSelectedShipping($destination,$totalWeight, $params['shippingService']);
+			// $selectedShipping = $this->getSelectedShipping($destination,$totalWeight, $params['shippingService']);
 			
 			$baseTotalPrice = \Cart::getSubTotal();
-			$shippingCost = $selectedShipping['cost'];
+			$shippingCost = 0;
 			$discountAmount = 0;
 			$discountPercent = 0;
 			$grandTotal = ($baseTotalPrice + $shippingCost) - $discountAmount;
+			// $grandTotal = ($baseTotalPrice) - $discountAmount;
 	
 			$orderDate = date('Y-m-d H:i:s');
 			$paymentDue = (new \DateTime($orderDate))->modify('+3 day')->format('Y-m-d H:i:s');
@@ -62,9 +63,9 @@ class OrderController extends Controller
 				'username' => $params['fullName'],
 				'address' => $params['address'],
 				'address2' => $params['address2'],
-				'province_id' => $params['province'],
-				'city_id' => $params['city'],
-				'postcode' => $params['postcode'],
+				// 'province_id' => $params['province'],
+				// 'city_id' => $params['city'],
+				// 'postcode' => $params['postcode'],
 				'phone' => $params['phone'],
 				'email' => $params['email'],
 			];
@@ -88,15 +89,16 @@ class OrderController extends Controller
 				'customer_address2' => $params['address2'],
 				'customer_phone' => $params['phone'],
 				'customer_email' => $params['email'],
-				'customer_city_id' => $params['city'],
-				'customer_province_id' => $params['province'],
-				'customer_postcode' => $params['postcode'],
+				// 'customer_city_id' => $params['city'],
+				// 'customer_province_id' => $params['province'],
+				// 'customer_postcode' => $params['postcode'],
 				'notes' => $params['notes'],
-				'shipping_courier' => $selectedShipping['courier'],
-				'shipping_service_name' => $selectedShipping['service'],
+				// 'shipping_courier' => $selectedShipping['courier'],
+				// 'shipping_service_name' => $selectedShipping['service'],
 			];
 
 			$order = Order::create($orderParams);
+			
 
 			$cartItems = \Cart::getContent();
 
@@ -137,9 +139,9 @@ class OrderController extends Controller
 			$shippingAddress2 = $params['address2'];
 			$shippingPhone = $params['phone'];
 			$shippingEmail = $params['email'];
-			$shippingCityId = $params['city'];
-			$shippingProvinceId = $params['province'];
-			$shippingPostcode = $params['postcode'];
+			// $shippingCityId = $params['city'];
+			// $shippingProvinceId = $params['province'];
+			// $shippingPostcode = $params['postcode'];
 
 			$shipmentParams = [
 				'user_id' => auth()->id(),
@@ -152,9 +154,9 @@ class OrderController extends Controller
 				'address2' => $shippingAddress2,
 				'phone' => $shippingPhone,
 				'email' => $shippingEmail,
-				'city_id' => $shippingCityId,
-				'province_id' => $shippingProvinceId,
-				'postcode' => $shippingPostcode,
+				// 'city_id' => $shippingCityId,
+				// 'province_id' => $shippingProvinceId,
+				// 'postcode' => $shippingPostcode,
 			];
 			Shipment::create($shipmentParams);
 
@@ -173,7 +175,7 @@ class OrderController extends Controller
 		\Cart::clear();
 		\Cart::clearCartConditions();
 
-		$this->initPaymentGateway();
+		// $this->initPaymentGateway();
 
 		$customerDetails = [
 			'first_name' => $order->customer_first_name,
@@ -196,17 +198,18 @@ class OrderController extends Controller
 		];
 
 		try{
-			$snap = Snap::createTransaction($transaction_details);
+			// $snap = Snap::createTransaction($transaction_details);
 	
-			$order->payment_token = $snap->token;
-			$order->payment_url = $snap->redirect_url;
+			// $order->payment_token = $snap->token;
+			// $order->payment_url = $snap->redirect_url;
 			$order->save();
 
-			return $order->payment_url;
+			return;
 		}
 		catch(Exception $e) {
 			echo $e->getMessage();
 		}
 
 	}
+
 }

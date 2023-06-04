@@ -2,11 +2,11 @@
 <html lang="zxx">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Ogani Template" />
-    <meta name="keywords" content="Ogani, unica, creative, html" />
+    <meta name="description" content="Liquor Shop " />
+    <meta name="keywords" content="Liquor Shop, unica, creative, html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Ogani | Template</title>
+    <title>Liquor Shop</title>
 
     <!-- Google Font -->
     <link
@@ -38,7 +38,7 @@
         <div class="row justify-content-center">
           <div class="col-lg-6 text-center">
             <div class="header__logo">
-              <a href="/"><img src="{{ asset('frontend/img/logo.png') }}" alt="" /></a>
+              <a href="/">Liquor Shop</a>
             </div>
           </div>
         </div>
@@ -55,12 +55,12 @@
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="footer__about">
               <div class="footer__about__logo">
-                <a href="./index.html"><img src="{{ asset('frontend/img/logo.png') }}" alt="" /></a>
+                <a href="./index.html">Liquor Shop</a>
               </div>
               <ul>
-                <li>Address: 60-49 Road 11378 New York</li>
-                <li>Phone: +65 11.188.888</li>
-                <li>Email: hello@colorlib.com</li>
+                <li>Address: New South Wales Australia</li>
+                <li>Phone: +617890293749</li>
+                
               </ul>
             </div>
           </div>
@@ -109,15 +109,13 @@
             <div class="footer__copyright">
               <div class="footer__copyright__text">
                 <p>
-                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                
                   Copyright &copy;
                   <script>
                     document.write(new Date().getFullYear());
                   </script>
-                  All rights reserved | This template is made with
-                  <i class="fa fa-heart" aria-hidden="true"></i> by
-                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  
+               
                 </p>
               </div>
               <div class="footer__copyright__payment">

@@ -5,18 +5,18 @@ import axios from "axios";
 const Checkout = () => {
     const [carts, setCarts] = useState([]);
     const [total, setTotal] = useState(0);
-    const [provinces, setProvinces] = useState([]);
-    const [cities, setCities] = useState([]);
-    const [services, setServices] = useState([]);
+    // const [provinces, setProvinces] = useState([]);
+    // const [cities, setCities] = useState([]);
+    // const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [wait, setWait] = useState(false);
     const [fullName, setFullName] = useState("");
-    const [province, setProvince] = useState("");
+    // const [province, setProvince] = useState("");
     const [city, setCity] = useState("");
-    const [shippingService, setShippingService] = useState("");
+    // const [shippingService, setShippingService] = useState("");
     const [address, setAddress] = useState("");
     const [address2, setAddress2] = useState("");
-    const [postcode, setPostcode] = useState("");
+    // const [postcode, setPostcode] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [notes, setNotes] = useState("");
@@ -30,31 +30,31 @@ const Checkout = () => {
             setLoading(false);
         });
 
-        axios.get("/api/provinces").then((res) => {
-            if (res.status === 200) {
-                setProvinces(Object.values(res.data.provinces));
-            }
-            setLoading(false);
-        });
+        // axios.get("/api/provinces").then((res) => {
+        //     if (res.status === 200) {
+        //         setProvinces(Object.values(res.data.provinces));
+        //     }
+        //     setLoading(false);
+        // });
         axios.get("/api/users").then((res) => {
             if (res.status === 200) {
-                if (res.data.users.province_id != null) {
-                    setProvinceId(res.data.users.province_id);
-                    setCityId(res.data.users.city_id);
-                }
+                // if (res.data.users.province_id != null) {
+                //     setProvinceId(res.data.users.province_id);
+                //     setCityId(res.data.users.city_id);
+                // }
                 setFullName(
                     res.data.users.username == null
                         ? ""
                         : res.data.users.username
                 );
-                setProvince(
-                    res.data.users.province_id == null
-                        ? ""
-                        : res.data.users.province_id
-                );
-                setCity(
-                    res.data.users.city_id == null ? "" : res.data.users.city_id
-                );
+                // setProvince(
+                //     res.data.users.province_id == null
+                //         ? ""
+                //         : res.data.users.province_id
+                // );
+                // setCity(
+                //     res.data.users.city_id == null ? "" : res.data.users.city_id
+                // );
                 setAddress(
                     res.data.users.address == null ? "" : res.data.users.address
                 );
@@ -63,11 +63,11 @@ const Checkout = () => {
                         ? ""
                         : res.data.users.address2
                 );
-                setPostcode(
-                    res.data.users.postcode == null
-                        ? ""
-                        : res.data.users.postcode
-                );
+                // setPostcode(
+                //     res.data.users.postcode == null
+                //         ? ""
+                //         : res.data.users.postcode
+                // );
                 setPhone(
                     res.data.users.phone == null ? "" : res.data.users.phone
                 );
@@ -82,42 +82,42 @@ const Checkout = () => {
         });
     }, []);
 
-    const setProvinceId = (provinceId) => {
-        setProvince(provinceId);
-        axios.get(`/api/cities?provinceId=${provinceId}`).then((res) => {
-            if (res.status === 200) {
-                setCities(res.data.cities);
-            }
-            setLoading(false);
-        });
-    };
+    // const setProvinceId = (provinceId) => {
+    //     setProvince(provinceId);
+    //     axios.get(`/api/cities?provinceId=${provinceId}`).then((res) => {
+    //         if (res.status === 200) {
+    //             setCities(res.data.cities);
+    //         }
+    //         setLoading(false);
+    //     });
+    // };
 
-    const setCityId = (city) => {
-        setCity(city);
-        setWait(true);
-        axios.get(`/api/shipping-cost?city=${city}`).then((res) => {
-            setServices(res.data.results);
-            setLoading(false);
-            setWait(false);
-        });
-    };
+    // const setCityId = (city) => {
+    //     setCity(city);
+    //     setWait(true);
+    //     axios.get(`/api/shipping-cost?city=${city}`).then((res) => {
+    //         setServices(res.data.results);
+    //         setLoading(false);
+    //         setWait(false);
+    //     });
+    // };
 
-    const setShippingCostId = (service) => {
-        setShippingService(service);
-        setWait(true);
-        const cityId = document.getElementById("city").value;
+    // const setShippingCostId = (service) => {
+    //     setShippingService(service);
+    //     setWait(true);
+    //     const cityId = document.getElementById("city").value;
 
-        axios
-            .post(`/api/set-shipping`, {
-                shipping_service: service,
-                city_id: cityId,
-            })
-            .then((res) => {
-                setTotal(res.data.data.total);
-                setLoading(false);
-                setWait(false);
-            });
-    };
+    //     axios
+    //         .post(`/api/set-shipping`, {
+    //             shipping_service: service,
+    //             city_id: cityId,
+    //         })
+    //         .then((res) => {
+    //             setTotal(res.data.data.total);
+    //             setLoading(false);
+    //             setWait(false);
+    //         });
+    // };
 
     const placeOrder = (e) => {
         e.preventDefault();
@@ -125,12 +125,12 @@ const Checkout = () => {
         axios
             .post(`/api/checkout`, {
                 fullName,
-                province,
-                city,
-                shippingService,
+                // province,
+                // city,
+                // shippingService,
                 address,
                 address2,
-                postcode,
+                // postcode,
                 phone,
                 email,
                 notes,
@@ -165,80 +165,7 @@ const Checkout = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="checkout__input">
-                                <p>
-                                    Province<span>*</span>
-                                </p>
-                                <select
-                                    className="form-control"
-                                    value={province}
-                                    onChange={(e) =>
-                                        setProvinceId(e.target.value)
-                                    }
-                                >
-                                    <option value="">=== Choose ===</option>
-                                    {provinces.map((province, index) => {
-                                        return (
-                                            <option
-                                                key={index}
-                                                value={index + 1}
-                                            >
-                                                {province}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
-                            <div className="checkout__input">
-                                <p>
-                                    City<span>*</span>
-                                </p>
-                                <select
-                                    id="city"
-                                    className="form-control"
-                                    value={city}
-                                    onChange={(e) => setCityId(e.target.value)}
-                                >
-                                    <option value="">=== Choose ===</option>
-                                    {Object.entries(cities).map(
-                                        (city, index) => {
-                                            return (
-                                                <option
-                                                    key={index}
-                                                    value={city[0]}
-                                                >
-                                                    {city[1]}
-                                                </option>
-                                            );
-                                        }
-                                    )}
-                                </select>
-                            </div>
-                            <div className="checkout__input">
-                                <p>
-                                    Shipping Service<span>*</span>
-                                </p>
-                                <select
-                                    className="form-control"
-                                    value={shippingService}
-                                    onChange={(e) =>
-                                        setShippingCostId(e.target.value)
-                                    }
-                                >
-                                    <option value="">=== Choose ===</option>
-                                    {services.map((service, index) => {
-                                        return (
-                                            <option
-                                                key={index}
-                                                value={service.service.replace(
-                                                    /\s/g,
-                                                    ""
-                                                )}
-                                            >{`${service.service} | ${service.cost} | ${service.etd} `}</option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
+
                             <div className="checkout__input">
                                 <p>
                                     Address<span>*</span>
@@ -259,18 +186,7 @@ const Checkout = () => {
                                     placeholder="Apartment, suite, unite ect (optinal)"
                                 />
                             </div>
-                            <div className="checkout__input">
-                                <p>
-                                    Postcode / ZIP<span>*</span>
-                                </p>
-                                <input
-                                    type="text"
-                                    value={postcode}
-                                    onChange={(e) =>
-                                        setPostcode(e.target.value)
-                                    }
-                                />
-                            </div>
+
                             <div className="row">
                                 <div className="col-lg-6">
                                     <div className="checkout__input">
