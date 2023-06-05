@@ -2,7 +2,6 @@
 
 ## Screenshots
 
-![preview img](/preview.png)
 
 ## Run Locally
 
