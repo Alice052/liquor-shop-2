@@ -8,7 +8,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/Kushal198/laravel-shop.git
+  git clone https://github.com/Alice052/liquor-shop-2.git
 ```
 
 Go to the project directory
